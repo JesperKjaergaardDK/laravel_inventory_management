@@ -12,7 +12,8 @@ class StorageItemController extends Controller
      */
     public function index()
     {
-        //
+        $items = StorageItem::all();
+        return view('storage.index', compact('items'));
     }
 
     /**
@@ -20,7 +21,7 @@ class StorageItemController extends Controller
      */
     public function create()
     {
-        //
+        return view('storage.create');
     }
 
     /**
@@ -28,7 +29,15 @@ class StorageItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'product_name' => 'required',
+            'price' => 'required',
+            'quantity' => 'required',
+        ]);
+
+        StorageItem::create($validated);
+
+        return redirect()->route('storage.index')->with('success', 'Successfully created a product');
     }
 
     /**
@@ -42,24 +51,37 @@ class StorageItemController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(StorageItem $storageItem)
-    {
-        //
+    public function edit($id)
+    { 
+        $item = StorageItem::findOrFail($id);
+        return view('storage.edit', compact('item'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, StorageItem $storageItem)
+    public function update(Request $request, $id)
     {
-        //
+        $validated = $request->validate([
+            'product_name' => 'required',
+            'price' => 'required',
+            'quantity' => 'required',
+        ]);
+
+        $item = StorageItem::findOrFail($id);
+        $item->update($validated);
+
+        return redirect()->route('storage.index')->with('success', 'Successfully Updated a product');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(StorageItem $storageItem)
+    public function destroy($id)
     {
-        //
+        $item = StorageItem::findOrFail($id);
+        $item->delete();
+
+        return redirect()->route('storage.index')->with('success', 'storage item has been deleted');
     }
 }
