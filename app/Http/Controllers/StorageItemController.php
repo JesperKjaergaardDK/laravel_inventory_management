@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\StorageItem;
 use Illuminate\Http\Request;
 
+//Controller with resoureces to create methods for the databse
 class StorageItemController extends Controller
 {
     /**

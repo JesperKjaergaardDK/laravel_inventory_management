@@ -1,28 +1,31 @@
 <x-layout>
-  <a href="{{ route('storage.index') }}">Go back</a>
+  <div class="w-md flex flex-col justify-center m-auto gap-3">
 
-
-  <form action="{{ route('storage.store') }}" method="POST">
-    @csrf
-
-    <label for=""></label>
-    <input type="text" name="product_name" value="{{ old('product_name') }}">
-
-    <label for=""></label>
-    <input type="number" name="price" value="{{ old('price') }}">
-
-    <label for=""></label>
-    <input type="number" name="quantity" value="{{ old('quantity') }}">
-
-    <button type="submit">Create</button>
-  </form>
-
-  @if ($errors->any())
+    <a href="{{ route('storage.index') }}"><button>Go back</button></a>
+    
+    
+    <form action="{{ route('storage.store') }}" method="POST">
+      @csrf
+      
+      <label for="product_name">Product name</label>
+      <input type="text" id="product_name" name="product_name" value="{{ old('product_name') }}">
+      
+      <label for="price">Price</label>
+      <input type="number" id="price" name="price" value="{{ old('price') }}">
+      
+      <label for="quantity">Quantity</label>
+      <input type="number" id="quantity" name="quantity" value="{{ old('quantity') }}">
+      
+      <button class="bg-green-700 text-white" type="submit">Create</button>
+    </form>
+    
+    @if ($errors->any())
     <ul>
       @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
+      <li class="text-red-600">* {{ $error }}</li>
       @endforeach
     </ul>
-  @endif
-
+    @endif
+    
+  </div>
 </x-layout>
